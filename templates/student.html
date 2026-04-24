@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <body>
+
+        <form action="/student_reg" method="POST">
+            <fieldset>
+                <legend align="center">Student Registration:</legend><br><br>
+
+                <label>Date:</label>
+                <input type="date" name="date" required><br><br>
+
+                <label>Name:</label>
+                <input type="text" name="name" required><br><br>
+
+                <label>Form:</label>
+                <input type="text" name="form" required><br><br>
+
+                <label>Reason:</label>
+                <textarea name="reason" required></textarea><br><br>
+
+                <label>Permission:</label>
+                <input type="text" name="permit" required><br><br>
+
+                <label>Time:</label>
+                <input type="time" name="time" required><br><br>
+
+                <label>Status:(student want to get)</label>
+                <select name="status">
+                    <option>---------</option>
+                    <option value="In_temp">In (Leaving soon)</option>
+                    <option value="out_temp">Out(returning)</option>
+                    <option value="in_perm">(In permanent)</option>
+                    <option value="out_perm">(Out permanent)</option>
+                </select><br><br>
+
+                <label>Confirm:</label>
+                <input type="checkbox" value="mdimi" name="confirm" required><br><br>
+
+                <button type="submit">Allow</button>
+
+            </fieldset>
+        </form>
+    </body>
+</html>

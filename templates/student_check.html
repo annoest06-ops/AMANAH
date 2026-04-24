@@ -1,0 +1,49 @@
+<html>
+
+<body>
+
+    <table border="1">
+
+        <tr>
+            <th>Date</th>
+            <th>Name</th>
+            <th>Form</th>
+            <th>Reason</th>
+            <th>Permit</th>
+            <th>Status</th>
+            <th>time_created</th>
+            <th>time_update</th>
+            <th>Confirm</th>
+            <th>Sign</th>
+            <th>Allow</th>
+            
+        </tr>
+        {%if sets%}
+       {%for set in sets%}
+        <tr>
+            <form action="/student_check" method="POST">
+            <td>{{set.date}}</td>
+            <td><input type="text" name="name" value="{{set.name}}" readonly></td>
+            <td>{{set.form}}</td>
+            <td>{{set.reason}}</td>
+            <td>{{set.permission}}</td>
+            <td>{{set.status}}</td>
+            <td>{{set.created_time}}</td>
+            
+            <td><input type="time" name="time_update"></td>
+            <td><input type="checkbox" name="status_update" value="archived"></td>
+            <td><input type="checkbox" name="sign" value="mdimi"></td>
+            <td><button type="submit">Allow</button></td> 
+            </form>
+            
+            
+        </tr>
+        {%endfor%}
+        
+        {%else%}
+    <p>no record found!</p>
+    {%endif%}
+    </table>
+    
+</body>
+</html>

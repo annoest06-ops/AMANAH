@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+
+    <form action="/staff_reg" method="POST">
+
+        <fieldset>
+
+            <legend>Staff registration:</legend>
+
+            <label>Date:</label>
+            <input type="date" name="date" require><br><br>
+
+            <label>Name:</label>
+            <input type="text" name="name" required><br><br>
+
+            <label>Status:(staff want to get)</label>
+              <select name="status">
+                    <option>---------</option>
+                    <option value="Inside">Inside</option>
+                    <option value="Outside">Outside</option>
+                </select><br><br>
+
+            <label>Time:</label>
+            <input type="time" name="time" required><br><br>
+
+            <label>Confirm:</label>
+            <input type="checkbox" name="confirm" Value="mdimi" required><br><br>
+
+            <button type="submit">Allow</button>
+        </fieldset>
+    </form>
+</body>
+</html>

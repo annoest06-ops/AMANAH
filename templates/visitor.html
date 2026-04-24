@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+
+<html>
+
+
+   <body>
+
+    
+    <form action="/visitor_reg" method="POST">
+        <fieldset>
+
+        <legend align=center>Visitor registration</legend><br><br>
+        
+        <label>Date:</label>
+        <input type="date" name="date" required><br><br>
+
+        <label>Name:</label>
+        <input type="text" required name="name"><br><br>
+
+        <label>Id:</label>
+        <input type="text" required name="id_no"><br><br>
+
+        <label>Contact:</label>
+        <input type="tel" required name="contact"><br><br>
+
+        <label>Destination:</label>
+        <input type="text" required name="destiny"><br><br>
+
+        <label>Reason:</label>
+        <textarea required name="reason"></textarea><br><br>
+
+        <label>category:</label>
+        <select name="category">
+          <option>-------</option>
+            <option value="parent">Parent🟢</option>
+            <option value="casual">Casual🟡</option>
+            <option value="other">Other</option>
+        </select><br><br>
+
+        <label>Items:</label>
+        <textarea required name="items"></textarea><br><br>
+
+        <label>Time in:</label>
+        <input type="time" required name="time_in"><br><br>
+
+        <label>confirm:</label>
+        <input type="checkbox" required name="confirm" value="mndimi"><br><br>
+
+        <button type="submit">submit</button>
+        
+      </fieldset>
+    </form>
+    </legend>
+   </body>
+</html>

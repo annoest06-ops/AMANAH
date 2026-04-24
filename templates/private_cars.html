@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+
+    <form action="/private_cars" method="POST">
+        <fieldset>
+
+            <legend align="center">Private cars registration</legend><br><br>
+
+            <label>Date:</label>
+            <input type="date" name="date" required><br><br>
+
+            <label>Name:</label>
+            <input type="text" name="name" required><br><br>
+
+            <label>Vehicle no:</label>
+            <input type="text" name="car_no" required><br><br>
+
+            <label>Status:(car is get)</label>
+            <select name="status">
+                <option>---------</option>
+                <option value="Inside">Inside</option>
+                <option value="Outside">Outside</option>
+            </select><br><br>
+
+            <label>Time:</label>
+            <input type="time" name="time" required><br><br>
+
+            <label>Confirm:</label>
+            <input type="checkbox" name="confirm" value="mndimi" required><br><br>
+
+            <button type="submit">Allow</button>
+
+        </fieldset>
+    </form>
+</body>
+</html>

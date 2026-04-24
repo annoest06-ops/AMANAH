@@ -1,0 +1,46 @@
+<html>
+
+   <body>
+
+
+    <table border="1">
+     <tr>
+        <th>Date</th>
+        <th>Name</th>
+        <th>Id</th>
+        <th>Contact</th>
+        <th>Category</th>
+        <th>Destination</th>
+        <th>Reason</th>
+        <th>Status</th>
+        <th>Time_created</th>
+        <th>Time_update</th>
+        <th>Sign</th>
+        <th>Allow</th>
+     </tr>
+        <form action="/visitor_check" method="POST">
+        {%if sets%}
+        {%for set in sets%}
+            <tr>
+                <td>{{set.date}}</td>
+                <td>{{set.name}}</td>
+                <td><input type="text" value="{{set.sj_id}}" name="id_no" readonly></td>
+                <td>{{set.contact}}</td>
+                <td>{{set.category}}</td>
+                <td>{{set.destination}}</td>
+                <td>{{set.reason}}</td>
+                <td>{{set.status}}</td>
+                <td>{{set.time_in}}</td>
+                <td><input type="time" name="time_update"></td>
+                <td><input type="checkbox" name="sign" value="mdimi"></td>
+                <td><button type="submit">Allow</button></td>
+            </tr>
+        {%endfor%}
+        {%else%}
+        <p>No visitor records found.</p>
+        {%endif%}
+
+        </form>
+    </table>
+   </body>
+</html>
