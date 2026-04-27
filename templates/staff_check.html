@@ -1,0 +1,33 @@
+<html>
+
+<body>
+
+    <table border="1">
+        <tr>
+            <th>Date</th>
+            <th>Name</th>
+            <th>Time Out</th>
+            <th>Sign</th>
+        </tr>
+
+        <tr>
+            {%if checks%}
+            {%for check in checks %}
+
+            <td>{{check.date}}</td>
+            <td>{{check.name}}</td>
+            <td>{{check.time_out}}</td>
+            <td>a wait</td>
+
+            {%end for%}
+            {%else%}
+            <p>No data found</p>
+            {%endif%}
+
+        </tr>
+
+
+    </table>
+    </form>
+</body>
+</html>

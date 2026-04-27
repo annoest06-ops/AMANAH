@@ -112,7 +112,7 @@ def staff_regit():
 
 def staff_get(values):
     sql='''
-    INSERT INTO staff_table(date,name,status,time,sign)
+    INSERT INTO staff_table(date,name,status,time_out,sign_out)
     VALUES(%s,%s,%s,%s,%s)
 '''
 
@@ -440,6 +440,55 @@ def visitor_check_get(values):
         return True,None
     except Exception as e:
         return False,str(e)
+
+
+
+@app.route('/staff_check',methods=['POST','GET'])
+
+def staff_check():
+
+    checks,error=staff_check_give()
+    if not checks:
+        print('ERROR',error)
+
+    return render_template('staff_check.html',checks=checks)
+
+def staff_check_give():
+    sql='''
+    SELECT date,name,time_out
+    FROM staff_table
+    WHERE status=OUT
+    '''
+
+    try:
+        with psycopg2.connect(DATABASE_URL,sslmode="require") as conn:
+            with conn.cursor(cursor_factory=RealDictCursor) as cur:
+                cur.execute(sql)
+                row=cur.fetchall()
+            conn.commit()
+        return row,None
+    except Exception as e:
+        return False,str(e)
+
+
+def staff_check_get(values):
+    sql='''
+      UPDATE staff_table
+      SET time_in=%s AND sign_in=%s AND status=IN
+      WHERE name=%s
+    '''
+    
+
+    try:
+        with psycopg2.connect(DATABASE_URL,sslmode="require") as conn:
+            with conn.cursor() as cur:
+                cur.execute(sql,values)
+            conn.commit()
+        return True,None
+    except Exception as e:
+        return False,str(e)
+        
+
 
     
 if __name__=='__main__':
