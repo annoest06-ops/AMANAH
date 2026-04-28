@@ -7,19 +7,28 @@
             <th>Date</th>
             <th>Name</th>
             <th>Time Out</th>
+            <th>Time In</th>
             <th>Sign</th>
+            <th>Allow</th>
         </tr>
 
         <tr>
             {%if checks%}
             {%for check in checks %}
-
+            
+            
             <td>{{check.date}}</td>
-            <td>{{check.name}}</td>
-            <td>{{check.time_out}}</td>
-            <td>a wait</td>
 
-            {%end for%}
+            <form action="/staff_check" method="post">
+            
+            <td><input type="text" name="name" value="{{check.name}}"></td>
+            <td>{{check.time_out}}</td>
+            
+            <td><input type="time" name="time_in"></td>
+            <td><input type="checkbox" name="sign_in" value="mdimi"></td>
+            <td><button type="submit">Allow</button></td>
+            </form>
+            {%endfor%}
             {%else%}
             <p>No data found</p>
             {%endif%}

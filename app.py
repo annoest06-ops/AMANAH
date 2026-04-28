@@ -451,6 +451,17 @@ def staff_checksforall():
     if not checks:
         print('ERROR',error)
 
+    if request.method=='POST':
+        name=request.form.get('name')
+        time_in=request.form.get('time_in')
+        sign_in=request.form.get('sign_in')
+
+        values=[time_in,sign_in,name]
+        cool,error=staff_check_get(values)
+
+        if not cool:
+            print('ERROR',error)
+
     return render_template('staff_check.html',checks=checks)
 
 def staff_check_give():
@@ -474,7 +485,7 @@ def staff_check_give():
 def staff_check_get(values):
     sql='''
       UPDATE staff_table
-      SET time_in=%s AND sign_in=%s AND status=IN
+      SET time_in=%s ,sign_in=%s , status='IN'
       WHERE name=%s
     '''
     
@@ -487,9 +498,35 @@ def staff_check_get(values):
         return True,None
     except Exception as e:
         return False,str(e)
-        
 
 
+@app.route('/student_item_check')
+def st_items_check():
+    passed,fail=student_item_check_give()
+
+    if not passed:
+        print('ERROR',fail)
     
+    return render_template('student_items_check.html',passed=passed)
+
+def student_item_check_give():
+  sql='''
+  SELECT date,name,form,item
+  FROM student_item
+  WHERE status='FALSE'
+  '''
+  
+  try:
+        with psycopg2.connect(DATABASE_URL,sslmode="require") as conn:
+            with conn.cursor(cursor_factory=RealDictCursor) as cur:
+                cur.execute(sql)
+                row=cur.fetchall()
+            conn.commit()
+        return row,None
+  except Exception as e:
+        return False,str(e)
+   
+    
+
 if __name__=='__main__':
     app.run(debug=True)
