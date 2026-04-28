@@ -445,7 +445,7 @@ def visitor_check_get(values):
 
 @app.route('/staff_check',methods=['POST','GET'])
 
-def staff_check():
+def staff_checksforall():
 
     checks,error=staff_check_give()
     if not checks:
@@ -457,7 +457,7 @@ def staff_check_give():
     sql='''
     SELECT date,name,time_out
     FROM staff_table
-    WHERE status=OUT
+    WHERE status='OUT'
     '''
 
     try:
