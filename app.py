@@ -500,14 +500,28 @@ def staff_check_get(values):
         return False,str(e)
 
 
-@app.route('/student_item_check')
+@app.route('/student_item_check',methods=['POST','GET'])
 def st_items_check():
     passed,fail=student_item_check_give()
 
     if not passed:
         print('ERROR',fail)
     
+    if request.method=='POST':
+        staff_name=request.form.get('staff_name')
+        st_name=request.form.get('st_name')
+        date_update=request.form.get('date_update')
+        sign=request.form.get('sign')
+        
+        values=[staff_name,sign,date_update,st_name]
+        get,error=student_item_check_get(values)
+
+        if not get:
+            print('ERROR',error)
+
     return render_template('student_items_check.html',passed=passed)
+
+    
 
 def student_item_check_give():
   sql='''
@@ -527,6 +541,246 @@ def student_item_check_give():
         return False,str(e)
    
     
+def student_item_check_get(values):
+    sql='''
+    UPDATE student_item
+    SET staff_name=%s ,sign_out=%s ,date_updated=%s ,status='TRUE'
+    WHERE name=%s
+    '''
 
+    try:
+        with psycopg2.connect(DATABASE_URL,sslmode="require") as conn:
+            with conn.cursor() as cur:
+                cur.execute(sql,values)
+            conn.commit()
+        return True,None
+    except Exception as e:
+        return False,str(e)
+    
+@app.route('/visitor_history',methods=['POST','GET'])
+def v_hist():
+
+    gets=None
+    if request.method=='POST':
+        date=request.form.get('date')
+
+        gets,lose=visitor_hist(date)
+
+        if not gets:
+           print('ERROR',lose)
+    return render_template('visitor_hist.html' ,gets = gets)
+
+def visitor_hist(values):
+    sql='''
+    SELECT date,name,sj_id,contact,destination,reason,time_in,time_out,item,sign_in,category,sign_out
+    FROM visitor_table
+    WHERE date=%s
+    '''
+    
+    try:
+        with psycopg2.connect(DATABASE_URL,sslmode="require") as conn:
+            with conn.cursor(cursor_factory=RealDictCursor) as cur:
+                cur.execute(sql,(values,))
+                row=cur.fetchall()
+            conn.commit()
+        return row,None
+    except Exception as e:
+        return False,str(e)
+    
+@app.route('/student_history',methods=['POST','GET'])
+def st_hist():
+    
+    cools=None
+    if request.method=='POST':
+      date=request.form.get('date')
+
+
+      cools,error=student_hist(date)
+
+      if not cools:
+          print('ERROR',error)
+
+    return render_template('student_hist.html' ,cools=cools)
+
+def student_hist(values):
+    sql='''
+     SELECT date,name,form,reason,permission,status,created_time,sign_in,updated_time,sign_out
+     FROM student_table
+     WHERE date=%s
+    '''
+
+    try:
+        with psycopg2.connect(DATABASE_URL,sslmode="require") as conn:
+            with conn.cursor(cursor_factory=RealDictCursor) as cur:
+                cur.execute(sql,(values,))
+                row=cur.fetchall()
+            conn.commit()
+        return row,None
+    except Exception as e:
+        return False,str(e)
+
+@app.route('/school_cars_history',methods=['POST','GET'])
+def scars_hist():
+
+    
+    if request.method=='POST':
+        date=request.form.get('date')
+        cools,error=school_car_hist(date)
+
+        if not cools:
+            print('ERROR',error)
+
+    return render_template('scar_hist.html' , cools=cools)
+    
+def school_car_hist(values):
+    sql='''
+    SELECT date,name,car_no,time,status,sign
+    FROM school_cars
+    WHERE date=%s
+    '''
+
+    try:
+        with psycopg2.connect(DATABASE_URL,sslmode="require") as conn:
+            with conn.cursor(cursor_factory=RealDictCursor) as cur:
+                cur.execute(sql,(values,))
+                row=cur.fetchall()
+            conn.commit()
+        return row,None
+    except Exception as e:
+        return False,str(e)
+    
+@app.route('/student_item_history',methods=['POST','GET'])
+def st_item_hist():
+    cools=None
+    if request.method=='POST':
+        date=request.form.get('date')
+        cools,error=student_item_hist(date)
+
+        if not cools:
+            print('ERROR',error)
+
+
+    
+    return render_template('st_item_hist.html',cools=cools)
+
+    
+def student_item_hist(values):
+    sql='''
+    SELECT date,name,form,item,sign_in,sign_out,staff_name
+    FROM student_item
+    WHERE date=%s
+    '''
+
+    try:
+        with psycopg2.connect(DATABASE_URL,sslmode="require") as conn:
+            with conn.cursor(cursor_factory=RealDictCursor) as cur:
+                cur.execute(sql,(values,))
+                row=cur.fetchall()
+            conn.commit()
+        return row,None
+    except Exception as e:
+        return False,str(e)
+
+@app.route('/school_item_history',methods=['POST','GET'])
+def sch_item_hist():
+    
+    if request.method=='POST':
+        date=request.form.get('date')
+        cools,error=school_item_hist(date)
+
+        if not cools:
+            print('ERROR',error)
+
+
+    
+    return render_template('school_item_hist.html',cools=cools)
+
+
+def school_item_hist(values):
+    sql='''
+    SELECT date,name,item,time,status,sign
+    FROM school_item
+    WHERE date=%s
+    '''
+
+    try:
+        with psycopg2.connect(DATABASE_URL,sslmode="require") as conn:
+            with conn.cursor(cursor_factory=RealDictCursor) as cur:
+                cur.execute(sql,(values,))
+                row=cur.fetchall()
+            conn.commit()
+        return row,None
+    except Exception as e:
+        return False,str(e)
+    
+
+
+@app.route('/private_car_history',methods=['POST','GET'])
+def private_car_hist():
+    cools=None
+    if request.method=='POST':
+        date=request.form.get('date')
+        cools,error=private_car_hist(date)
+
+        if not cools:
+            print('ERROR',error)
+
+
+    return render_template('private_car_hist.html',cools=cools)      
+
+
+
+
+def private_car_hist(values):
+    sql='''
+    SELECT date,name,car_no,time,status,sign
+    FROM private_cars
+    WHERE date=%s
+    '''
+
+    try:
+        with psycopg2.connect(DATABASE_URL,sslmode="require") as conn:
+            with conn.cursor(cursor_factory=RealDictCursor) as cur:
+                cur.execute(sql,(values,))
+                row=cur.fetchall()
+            conn.commit()
+        return row,None
+    except Exception as e:
+        return False,str(e)
+
+
+
+@app.route('/order_history',methods=['POST','GET'])
+def order_hist():
+    cools=None
+    if request.method=='POST':
+        date=request.form.get('date')
+        cools,error=order_hist(date)
+
+        if not cools:
+            print('ERROR',error)
+
+
+    return render_template('order_hist.html',cools=cools)      
+
+
+
+
+def order_hist(values):
+    sql='''
+    SELECT date,details,time,sign
+    FROM order_table
+    WHERE date=%s
+    '''
+
+    try:
+        with psycopg2.connect(DATABASE_URL,sslmode="require") as conn:
+            with conn.cursor(cursor_factory=RealDictCursor) as cur:
+                cur.execute(sql,(values,))
+                row=cur.fetchall()
+            conn.commit()
+        return row,None
+    except Exception as e:
+        return False,str(e)
 if __name__=='__main__':
     app.run(debug=True)

@@ -9,22 +9,28 @@
             <th>Name</th>
             <th>form</th>
             <th>item</th>
+            <th>Staff issued</th>
             <th>Date issued</th>
             <th>sign</th>
+            <th>Allow</th>
         </tr>
 
         {%if passed%}
             {%for passes in passed%}
         <tr>
-            
+             
+            <form action="/student_item_check" method="POST">
 
             <td>{{passes.date}}</td>
-            <td>{{passes.name}}</td>
+            <td><input type="text" name="st_name" value="{{passes.name}}" readonly></td>
             <td>{{passes.form}}</td>
             <td>{{passes.item}}</td>
-            <td>soon</td>
-            <td>soon</td>
-          
+            <td><input type="text" name="staff_name"></td>
+            
+            <td><input type="date" name="date_update"></td>
+            <td><input type="checkbox" name="sign" value="mdimi"></td>
+            <td><button type="submit">Allow</button></td>
+          </form>
         </tr>
 
         {%endfor%}

@@ -1,0 +1,64 @@
+<html>
+
+<body>
+<hr>
+<b>filter records</b>
+<form action="/student_history" method="POST">
+
+    <label>Date</label>
+    <input type="date" name="date">
+
+    <button type="submit">Search</button>
+</form>
+<hr>
+    <table border="1">
+        <tr>
+            <th>Date</th>
+            <th>Name</th>
+            <th>Form</th>
+            <th>Reason</th>
+            <th>Permission</th>
+            <th>Status</th>
+            <th>Time created</th>
+            <th>Guard IN</th>
+            <th>Guard OUT</th>
+            <th>Time updated</th>
+        </tr>
+
+        {%if cools%}
+        {%for cool in cools%}
+
+        <tr>
+            
+            <td>{{cool.date}}</td>
+            <td>{{cool.name}}</td>
+            <td>{{cool.form}}</td>
+            <td>{{cool.reason}}</td>
+            <td>{{cool.permission}}</td>
+            <td>
+                {%if cool.status== 'in_temp'%}
+                Inside Temporary
+                {%elif cool.status== 'out_temp'%}
+                Outside Temporary
+                {%elif cool.status=='in_perm' %}
+                Inside permanent
+                {%elif cool.status== 'out_perm' %}
+                Outside Permanent
+               {%endif%}
+            </td>
+
+            <td>{{cool.created_time}}</td>
+            <td>{{cool.sign_in}}</td>
+            <td>{{cool.sign_out}}</td>
+            <td>{{cool.updated_time}}</td>
+            
+        </tr>
+
+        {%endfor%}
+        {%else%}
+        <p>No records found</p>
+        {%endif%}
+
+    </table>
+</body>
+</html>

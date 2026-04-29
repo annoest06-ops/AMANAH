@@ -1,0 +1,45 @@
+<html>
+
+    <body>
+
+        <hr>
+        <b>filter by date</b>
+        <form action="/student_item_history" method="POST">
+            <label>Date</label>
+            <input type="date" name="date">
+            <button type="submit">Search</button>
+        </form>
+        <hr>
+
+        <table border="1">
+
+            <tr>
+                <th>Date</th>
+                <th>Name</th>
+                <th>Form</th>
+                <th>Item</th>
+                <th>Guard(Receive)</th>
+                <th>Guard (Issuing)</th>
+                <th>Staff (Recipient)</th>
+            </tr>
+            {%if cools%}
+            {%for cool in cools%}
+
+            <tr>
+
+                <td>{{cool.date}}</td>
+                <td>{{cool.name}}</td>
+                <td>{{cool.form}}</td>
+                <td>{{cool.item}}</td>
+                <td>{{cool.sign_in}}</td>
+                <td>{{cool.sign_out}}</td>
+                <td>{{cool.staff_name}}</td>
+            </tr>
+
+            {%endfor%}
+            {%else%} 
+            <p>No records found</p>
+            {%endif%}
+        </table>
+    </body>
+</html>

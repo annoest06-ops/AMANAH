@@ -1,0 +1,52 @@
+<html>
+
+<body>
+    <hr>
+    <b>Filter by date</b>
+
+    <form action="/visitor_history" method="POST">
+        <label>Date:</label>
+        <input type="date" name="date">
+        <button type="submit">Search</button>
+    </form>
+    <hr>
+
+    <table border="1">
+        <tr>
+            <th>Date</th>
+            <th>Name</th>
+            <th>Category</th>
+            <th>ID</th>
+            <th>Contact</th>
+            <th>Destination</th>
+            <th>Reason</th>
+            <th>Time In</th>
+            <th>Time Out</th>
+            <th>Items</th>
+            <th>Guard IN</th>
+            <th>Guard OUT</th>
+        </tr>
+        {%if gets%}
+        {%for get in gets%}
+        <tr>
+            <td>{{get.date}}</td>
+            <td>{{get.name}}</td>
+            <td>{{get.category}}</td>
+            <td>{{get.sj_id}}</td>
+            <td>{{get.contact}}</td>
+            <td>{{get.destination}}</td>
+            <td>{{get.reason}}</td>
+            <td>{{get.time_in}}</td>
+            <td>{{get.time_out}}</td>
+            <td>{{get.item}}</td>
+            <td>{{get.sign_in}}</td>
+            <td>{{get.sign_out}}</td>
+            
+        </tr>
+        {%endfor%}
+        {%else%}
+        <p>No data!</p>
+        {%endif%}
+    </table>
+</body>
+</html>
