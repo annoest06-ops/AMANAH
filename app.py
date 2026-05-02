@@ -16,6 +16,7 @@ app.secret_key='mysecrete123'
 
 @app.route('/visitor_reg',methods=['GET','POST'])
 def visitor_register():
+ 
     if request.method=='POST':
         date=request.form.get('date')
         name=request.form.get('name')
@@ -32,7 +33,9 @@ def visitor_register():
         success,error=visitor_get(values)
 
         if not success:
+            
             print('error',error)
+            return redirect(url_for('error'))
 
     return render_template('visitor.html')
 
@@ -70,6 +73,7 @@ def student_regist():
 
         if not success:
             print('ERROR',error)
+            return redirect(url_for('error'))
 
     return render_template('student.html')
 
@@ -105,6 +109,7 @@ def staff_regit():
         
         if not success:
             print('ERROR',error)
+            return redirect(url_for('error'))
 
     return render_template('staff.html')
 
@@ -141,6 +146,7 @@ def student_item():
 
          if not success:
              print('ERROR',error)
+             return redirect(url_for('error'))
     return render_template('student_items.html')
 
 
@@ -176,6 +182,7 @@ def school_item():
 
        if not success:
            print('ERROR',error)
+           return redirect(url_for('error'))
     
     return render_template('school_items.html')
 
@@ -212,6 +219,7 @@ def school_car():
 
         if not success:
             print('ERROR',error)
+            return redirect(url_for('error'))
 
     return render_template('school_cars.html')
 
@@ -248,6 +256,10 @@ def private_car():
 
         if not success:
             print('ERROR',error)
+            return redirect(url_for('error'))
+
+
+            
 
 
     return render_template('private_cars.html')
@@ -282,6 +294,7 @@ def order():
 
         if not success:
             print('ERROR',error)
+            return redirect(url_for('error'))
     return render_template('order.html')
 
 
@@ -314,6 +327,7 @@ def org_prop():
 
         if not success:
             print('ERROR',error)
+            return redirect(url_for('error'))
 
     return render_template('org_prop.html')
 
@@ -351,6 +365,7 @@ def student_check():
 
         if not success:
             print('ERROR',error)
+            return redirect(url_for('error'))
 
     return render_template('student_check.html',sets=sets)
 
@@ -406,6 +421,7 @@ def visitor_check():
         success,error=visitor_check_get(values)
         if not success:
             print('ERROR',error)
+            return redirect(url_for('error'))
 
     return render_template('visitor_check.html', sets=sets)
 def visitor_check_give():
@@ -461,6 +477,7 @@ def staff_checksforall():
 
         if not cool:
             print('ERROR',error)
+            return redirect(url_for('error'))
 
     return render_template('staff_check.html',checks=checks)
 
@@ -506,6 +523,7 @@ def st_items_check():
 
     if not passed:
         print('ERROR',fail)
+        return redirect(url_for('error'))
     
     if request.method=='POST':
         staff_name=request.form.get('staff_name')
@@ -568,6 +586,7 @@ def v_hist():
 
         if not gets:
            print('ERROR',lose)
+           return redirect(url_for('error'))
     return render_template('visitor_hist.html' ,gets = gets)
 
 def visitor_hist(values):
@@ -599,6 +618,7 @@ def st_hist():
 
       if not cools:
           print('ERROR',error)
+          return redirect(url_for('error'))
 
     return render_template('student_hist.html' ,cools=cools)
 
@@ -629,6 +649,7 @@ def scars_hist():
 
         if not cools:
             print('ERROR',error)
+            return redirect(url_for('error'))
 
     return render_template('scar_hist.html' , cools=cools)
     
@@ -658,6 +679,7 @@ def st_item_hist():
 
         if not cools:
             print('ERROR',error)
+            return redirect(url_for('error'))
 
 
     
@@ -690,6 +712,7 @@ def sch_item_hist():
 
         if not cools:
             print('ERROR',error)
+            return redirect(url_for('error'))
 
 
     
@@ -724,6 +747,7 @@ def private_car_hist():
 
         if not cools:
             print('ERROR',error)
+            return redirect(url_for('error'))
 
 
     return render_template('private_car_hist.html',cools=cools)      
@@ -759,6 +783,7 @@ def order_hist():
 
         if not cools:
             print('ERROR',error)
+            return redirect(url_for('error'))
 
 
     return render_template('order_hist.html',cools=cools)      
@@ -773,6 +798,7 @@ def order_hist(values):
     WHERE date=%s
     '''
 
+
     try:
         with psycopg2.connect(DATABASE_URL,sslmode="require") as conn:
             with conn.cursor(cursor_factory=RealDictCursor) as cur:
@@ -782,5 +808,214 @@ def order_hist(values):
         return row,None
     except Exception as e:
         return False,str(e)
+    
+
+@app.route('/org_check',methods=['POST','GET'])
+def org_view():
+   
+        
+    cools,error=org()
+
+    if not cools:
+        print('ERROR',error)
+        return redirect(url_for('error'))
+
+
+    return render_template('org_view.html',cools=cools)      
+
+def org():
+    sql='''
+    SELECT item_name,location
+    FROM org_items
+     
+    '''
+   
+
+
+    try:
+        with psycopg2.connect(DATABASE_URL,sslmode="require") as conn:
+            with conn.cursor(cursor_factory=RealDictCursor) as cur:
+                cur.execute(sql)
+                row=cur.fetchall()
+            conn.commit()
+        return row,None
+    except Exception as e:
+        return False,str(e)
+    
+
+@app.route('/report',methods=['POST','GET'])
+def report():
+    if request.method=='POST':
+        date=request.form.get('date')
+        shift=request.form.get('shift')
+        detail=request.form.get('detail')
+        comment=request.form.get('comment')
+        time_in=request.form.get('time_in')
+        sign_in=request.form.get('sign_in')
+
+        values=[date,shift,detail,comment,time_in,sign_in]
+        success,error=report_get(values)
+
+        if not success:
+            print('ERROR',error)
+            return redirect(url_for('error'))
+
+    return render_template('report.html')
+
+@app.route('/report_check',methods=['POST','GET'])
+def rp():
+
+    sets=None
+    if request.method=='POST':
+        date=request.form.get('date')
+        sets,error=report_check_give(date)
+
+        if not sets:
+            print('ERROR',error)
+            return redirect(url_for('error'))
+    
+    return render_template('report_check.html', sets=sets)
+
+@app.route('/update',methods=['POST','GET'])
+def update_sent():
+    if request.method=='POST':
+        time_update=request.form.get('time_out')
+        sign_out=request.form.get('sign_out')
+        sign_in=request.form.get('sign_in')
+
+        values=[time_update,sign_out,sign_in]
+        success,error=report_update(values)
+
+        if not success:
+            print('ERROR',error)
+            return redirect(url_for('error'))
+
+    return render_template('report_check.html')
+def report_check_give(values):
+    sql='''
+    SELECT date,shift,detail,comment,time_in,sign_in
+    FROM report
+    WHERE date=%s AND status='IN'
+    '''
+
+    try:
+        with psycopg2.connect(DATABASE_URL,sslmode="require") as conn:
+            with conn.cursor(cursor_factory=RealDictCursor) as cur:
+                cur.execute(sql,(values,))
+                row=cur.fetchall()
+            conn.commit()
+        return row,None
+    except Exception as e:
+        return False,str(e)
+
+def report_update(values):
+    sql='''
+   UPDATE report
+    SET time_out=%s, sign_out=%s ,status='OUT'
+    WHERE sign_in=%s AND status='IN'
+'''
+ 
+    try:
+        with psycopg2.connect(DATABASE_URL,sslmode="require") as conn:
+            with conn.cursor() as cur:
+                 cur.execute(sql,values)
+            conn.commit()
+        return True,None
+    except Exception as e:
+        return False,str(e)
+
+def report_get(values):
+    sql='''
+    INSERT INTO report(date,shift,detail,comment,time_in,sign_in)
+    VALUES(%s,%s,%s,%s,%s,%s)
+'''
+    try:
+        with psycopg2.connect(DATABASE_URL,sslmode="require") as conn:
+            with conn.cursor() as cur:
+                 cur.execute(sql,values)
+            conn.commit()
+        return True,None
+    except Exception as e:
+        return False,str(e)
+
+
+@app.route('/report_history',methods=['POST','GET'])
+def report_histoy():
+    cools=None
+    if request.method=='POST':
+        date=request.form.get('date')
+        cools,error=report_hist(date)
+
+        if not cools:
+            print('ERROR',error)
+            return redirect(url_for('error'))
+
+
+    return render_template('report_hist.html',cools=cools)
+
+def report_hist(values):
+    sql='''
+    SELECT date,detail,comment,time_in,sign_in,time_out,sign_out,shift
+    FROM report
+    WHERE date=%s
+    '''
+
+    try:
+        with psycopg2.connect(DATABASE_URL,sslmode="require") as conn:
+            with conn.cursor(cursor_factory=RealDictCursor) as cur:
+                cur.execute(sql,(values,))
+                row=cur.fetchall()
+            conn.commit()
+        return row,None
+    except Exception as e:
+        return False,str(e)
+
+@app.route('/login',methods=['POST','GET'])
+def login_route():
+    
+    if request.method=='POST':
+        username=request.form.get('username')
+        password=request.form.get('password')
+        values=[username,password]
+        
+
+        user,error=login_user(values)
+
+        if not user:
+            print('ERROR',error)
+            return render_template('login.html',error='invalid credentials')
+            
+
+        if username==user['username'] and password==user['password']:
+            session['username']=username
+            return redirect(url_for('visitor_register'))
+
+    return render_template('login.html')
+
+def login_user(values):
+    sql='''
+    SELECT username,password
+    FROM users
+    WHERE username=%s AND password=%s
+'''
+    try:
+        with psycopg2.connect(DATABASE_URL,sslmode="require") as conn:
+            with conn.cursor(cursor_factory=RealDictCursor) as cur:
+                cur.execute(sql,values)
+                row=cur.fetchone()
+            conn.commit()
+        return row,None
+    except Exception as e:
+        return False,None
+    
+@app.route('/error_fault')
+def error():
+    return render_template('error.html')
+
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect(url_for('login_route'))
+
 if __name__=='__main__':
     app.run(debug=True)
