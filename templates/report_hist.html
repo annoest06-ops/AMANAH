@@ -1,0 +1,46 @@
+<html>
+
+<body>
+
+    <form method="POST" action="/report_history">
+        <input type="date" name="date" >
+        <button type="submit">Search</button>
+    </form>
+
+    <table border="1">
+
+        <tr>
+            <th>Date</th>
+            <th>Details</th>
+            <th>Comments</th>
+            <th>Time in</th>
+            <th>Sign in</th>
+            <th>Time out</th>
+            <th>Sign out</th>
+            <th>Shift</th>
+        </tr>
+       
+        
+        {%if cools %}
+        
+       {%for cools in cools%}
+        <tr>
+            <td>{{cools.date}}</td>
+
+            <td><textarea readonly>{{cools.detail}}</textarea></td>
+            <td><textarea readonly>{{cools.comment}}</textarea></td>
+            <td>{{cools.time_in}}</td>
+            <td>{{cools.sign_in}}</td>
+            <td>{{cools.time_out}}</td>
+            <td>{{cools.sign_out}}</td>
+            <td>{{cools.shift}}</td>
+        </tr>
+
+        {%endfor%}
+        {%else%}
+        <p>No records found.</p>
+        {%endif%}
+    </table>
+</body>
+
+</html>

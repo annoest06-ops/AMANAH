@@ -1,0 +1,29 @@
+<html>
+
+  <body>
+    <form action="/report" method="POST">
+        <label>Date</label>
+        <input type="date" name="date"><br><br>
+
+        <select name="shift">
+            <option value="">Select shift</option>
+            <option value="Day">Day</option>
+            <option value="Night">Night</option>
+        </select><br><br>
+
+        <label>Details</label>
+        <textarea name="detail" placeholder="details of items"></textarea><br><br>
+         
+        <label>Comments</label>
+        <textarea name="comment" placeholder="additional comments"></textarea><br><br>
+         
+        <label>Time In</label>
+        <input type="time" name="time_in"><br><br>
+
+        <label>Sign in</label>
+        <input type="checkbox" name="sign_in" value="mdimi"><br><br>
+
+        <button type="submit">Submit</button>
+    </form>
+  </body>
+</html>

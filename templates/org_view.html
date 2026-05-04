@@ -1,0 +1,32 @@
+<html>
+
+<body>
+<hr>
+
+   <p>org_view</p>
+<hr>
+    <table border="1">
+        <tr>
+            <th>Item Name</th>
+            <th>Location</th>
+        </tr>
+
+        {%if cools%}
+        {%for cool in cools%}
+
+        <tr>
+            
+            <td>{{cool.item_name}}</td>
+            <td>{{cool.location}}</td>
+        
+            
+        </tr>
+
+        {%endfor%}
+        {%else%}
+        <p>No records found</p>
+        {%endif%}
+
+    </table>
+</body>
+</html>

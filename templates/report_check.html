@@ -1,0 +1,49 @@
+<html>
+<body>
+ 
+    <hr>
+
+    <form action="/report_check" method="POST">
+        <label>Date</label>
+        <input type="date" name="date"><br><br>
+        <button type="submit">Search</button>
+    </form>
+
+    <hr>
+    <form action="/update" method="POST">
+        {%if sets%}
+        {%for set in sets%}
+    <b>shift:{{set.shift}}</b><br><br>
+
+    <b>date:{{set.date}}</b><br><br>
+
+
+    <b>details:</b>
+    <textarea name="details"   readonly >{{set.detail}}</textarea><br><br>
+
+
+    <b>comments:</b>
+    <textarea name="comment"   readonly >{{set.comment}}</textarea><br><br>
+
+
+    <b>time in:{{set.time_in}}</b><br><br>
+
+    <label><b>sign in:</b></label>
+
+    <input type="text" name="sign_in" value="{{set.sign_in}}" readonly><br><br>
+
+    <b>time out</b>
+    <input type="time" name="time_out"><br><br>
+
+    <b>sign out:</b>
+    <input type="checkbox" name="sign_out" value="mdimi"><br><br>
+
+    <button type="submit" >submit</button>
+     
+    {%endfor%}
+    {%else%}
+        <p>No reports found for the selected date.</p>
+    {%endif%}
+    </form>
+</body>
+</html>
